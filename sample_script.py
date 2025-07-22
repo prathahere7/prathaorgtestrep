@@ -54,3 +54,16 @@ def run_cmd():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+
+@app.route('/profile')
+def profile():
+    username = request.args.get('username', '')
+    conn = sqlite3.connect('vulndb.db')
+    cur = conn.cursor()
+    cur.execute(f"SELECT bio FROM users WHERE username = '{username}'")
+    row = cur.fetchone()
+    conn.close()
+
+    bio = row[0] if row else "No bio available"
+    # XSS vulnerability: unescaped user content in HTML response
+    return render_template_string(f"<h2>Profile of {username}</h2><p>Bio: {bio}</p>")
