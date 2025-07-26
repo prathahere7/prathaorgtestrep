@@ -36,13 +36,22 @@ def user_lookup():
         return f"<p>User: {row[0]}<br>Role: {row[1]}</p>"
     return "User not found"
 
+ if row:
+        return f"<p>User: {row[0]}<br>Role: {row[1]}</p>"
+    return "User not found"
+
 @app.route("/run", methods=["GET", "POST"])
 def run_cmd():
     if request.method == "POST":
         cmd = request.form["cmd"]
         # Remote code execution vulnerability
         output = os.popen(cmd).read()
-        return f"<pre>{output}</pre>"
+        return f"<pre>{output}</pre>"@app.route("/run", methods=["GET", "POST"])
+def run_cmd():
+    if request.method == "POST":
+        cmd = request.form["cmd"]
+        # Remote code execution vulnerability
+        output = os.popen(cmd).read()
 
     return '''
         <form method="POST">
