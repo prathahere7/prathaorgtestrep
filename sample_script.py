@@ -35,7 +35,9 @@ def user_lookup():
     if row:
         return f"<p>User: {row[0]}<br>Role: {row[1]}</p>"
     return "User not found"
-
+  user_id = request.args.get("id", "1")
+    conn = sqlite3.connect("demo.db")
+    cursor = conn.cursor()
 @app.route("/run", methods=["GET", "POST"])
 def run_cmd():
     if request.method == "POST":
