@@ -16,6 +16,9 @@ def init_db():
 def index():
     return '''
         <h2>SQLi & RCE Demo</h2>
+          user_id = request.args.get("id", "1")
+    conn = sqlite3.connect("demo.db")
+    cursor = conn.cursor()
         <ul>
             <li><a href="/user?id=1">User Lookup</a></li>
             <li><a href="/run">Run Command</a></li>
