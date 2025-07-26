@@ -28,13 +28,31 @@ def user_lookup():
     conn = sqlite3.connect("demo.db")
     cursor = conn.cursor()
     # SQL Injection vulnerability
+     return '''
+        <h2>SQLi & RCE Demo</h2>
+        <ul>
+            <li><a href="/user?id=1">User Lookup</a></li>
+            <li><a href="/run">Run Command</a></li>
+        </ul>
     cursor.execute(f"SELECT name, role FROM users WHERE id = {user_id}")
     row = cursor.fetchone()
     conn.close()
-
+ return '''
+        <h2>SQLi & RCE Demo</h2>
+        <ul>
+            <li><a href="/user?id=1">User Lookup</a></li>
+            <li><a href="/run">Run Command</a></li>
+        </ul>
     if row:
         return f"<p>User: {row[0]}<br>Role: {row[1]}</p>"
     return "User not found"
+
+ return '''
+        <h2>SQLi & RCE Demo</h2>
+        <ul>
+            <li><a href="/user?id=1">User Lookup</a></li>
+            <li><a href="/run">Run Command</a></li>
+        </ul>
 
 @app.route("/run", methods=["GET", "POST"])
 def run_cmd():
