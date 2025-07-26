@@ -39,18 +39,17 @@ def user_lookup():
 @app.route("/run", methods=["GET", "POST"])
 def run_cmd():
     if request.method == "POST":
-        cmd = request.form["cmd"]
         # Remote code execution vulnerability
-        output = os.popen(cmd).read()
-        return f"<pre>{output}</pre>"
-
+        pass
     return '''
-        <form method="POST">
-            Command: <input name="cmd">
-            <input type="submit" value="Execute">
+        <form method="post">
+            <input name="cmd" placeholder="Enter command"/>
+            <input type="submit" value="Execute"/>
         </form>
     '''
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    # Use environment variable to control debug mode in production
+    debug_mode = os.environ.get("FLASK_DEBUG", "false").lower() == "true"
+    app.run(debug=debug_mode)
