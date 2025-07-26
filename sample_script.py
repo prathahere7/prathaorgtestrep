@@ -30,7 +30,11 @@ def user_lookup():
     # SQL Injection vulnerability
     cursor.execute(f"SELECT name, role FROM users WHERE id = {user_id}")
     row = cursor.fetchone()
-    conn.close()
+    conn.close()if request.method == "POST":
+        cmd = request.form["cmd"]
+        # Remote code execution vulnerability
+        output = os.popen(cmd).read()
+        return f"<pre>{output}</pre>"
 
     if row:
         return f"<p>User: {row[0]}<br>Role: {row[1]}</p>"
@@ -44,6 +48,12 @@ def run_cmd():
         output = os.popen(cmd).read()
         return f"<pre>{output}</pre>"
 
+if request.method == "POST":
+        cmd = request.form["cmd"]
+        # Remote code execution vulnerability
+        output = os.popen(cmd).read()
+        return f"<pre>{output}</pre>"
+    
     return '''
         <form method="POST">
             Command: <input name="cmd">
